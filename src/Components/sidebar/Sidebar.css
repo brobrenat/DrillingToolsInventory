@@ -1,0 +1,216 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow-x: hidden;
+    background: #f3f4f6;
+    
+  }
+  
+  /* Sidebar Styling */
+  .sidebar {
+    width: 300px;
+    height: 98%;
+    background: linear-gradient(45deg, #3a3a52, #2b2d42);
+    padding-top: 20px;
+    position: fixed;
+    transition: width 0.5s ease, background 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    top: 0;
+    left: 0px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: block;
+    position: fixed;
+    z-index: 1000;
+  }
+  
+  .sidebar-header {
+    padding: 0 20px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    color: #fff;
+  }
+  
+  .brand i {
+    margin-right: 10px;
+    font-size: 28px;
+  }
+  
+  .nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease, padding-left 0.3s ease;
+    position: relative;
+  }
+  
+  .active-link {
+    background-color: #4CAF50; /* Change this color to the one you want */
+    color: white;
+  }
+ 
+  .nav-icon{
+    font-size: 16px;
+    width: 35px;
+    min-width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-item:hover {
+    background: #bbc0f1;
+    padding-left: 30px;
+  }
+  
+  .nav-item:hover i {
+    animation: shake 0.5s;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+  }
+  
+  /* Dropdown Menu Styling */
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background: #3a3a52;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    transition: opacity 0.3s ease;
+  }
+  
+  .dropdown-menu .dropdown-item {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  
+  .dropdown-menu .dropdown-item:hover {
+    background: #575b8a;
+  }
+  
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .dropdown-icon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Show dropdown menu when active */
+  .dropdown.active .dropdown-menu {
+    display: block;
+  }
+  
+  /* Sidebar collapse styles */
+  .sidebar.collapsed {
+    width: 80px;
+    background: linear-gradient(45deg, #2b2d42, #3a3a52);
+  }
+  
+  .sidebar.collapsed .nav-item span,
+  .sidebar.collapsed .sidebar-header h3 span,
+  .sidebar.collapsed .nav-item .dropdown-icon,
+  .sidebar.collapsed .dropdown-menu{
+    display: none; 
+  }
+  
+  .sidebar.collapsed .nav-item .nav-icon {
+    display: block;
+  }
+  
+  .sidebar.collapsed .sidebar-header h3 {
+    justify-content: center;
+  }
+  
+  .main-content {
+    margin-left: 250px;
+    padding: 40px;
+    width: calc(100% - 250px);
+    transition: margin-left 0.5s ease;
+    background: #f3f4f6;
+  }
+  
+  .sidebar.collapsed ~ .main-content {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+  }
+  
+  .toggle-btn {
+    width: 20px;
+    height: 20px;
+    background: #6c63ff;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: absolute;
+    right: -10px;
+  }
+  
+  .toggle-btn .toggle-icon {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Smooth Hover Animation */
+  .nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background: #514e8f;
+    transition: transform 0.3s ease;
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  
+  .nav-item:hover::before {
+    transform: scaleY(1);
+    transform-origin: top;
+  }

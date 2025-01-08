@@ -1,0 +1,76 @@
+.contentbody h1{
+    text-align: left;
+    color: black;
+    margin-bottom: 30px;
+    margin-left: 170px;
+    margin-top: 50px;
+
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 50px;
+    background: linear-gradient(90deg, #568fe9, #351c3d);
+    height: 80vh;
+    width : 150vh;
+    border-radius: 50px;
+    animation: gradient 0.1s ease infinite;
+    margin-left: 180px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.box-container {
+    display: flex; 
+    justify-content: flex-start;
+    gap: 150px; 
+    margin-left: 100px;
+    flex-wrap: wrap;
+    margin-top: -50px;
+}
+
+.square {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+    background-color: rgb(125, 153, 247);
+    border-radius: 25px;
+    font-weight: bold;
+    color: white;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.square h2 {
+    color: rgb(248, 248, 248); 
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.square p {
+    font-size: 50px;
+    margin: 0;
+}
+
+
+.chart-container {
+    display: flex;
+    margin-top: 50px;
+    margin-left: 180px;
+    margin-right: 180px;
+    background-color: rgb(57, 56, 153);
+    border-radius: 30px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    width: 100vh;
+    height: 40vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+  
+}

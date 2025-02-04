@@ -19,10 +19,20 @@ const ToolsList = ({ sidebar }) => {
     tool_type: '',
     serial_number: ''
   });
+  const [showAddPopup, setShowAddPopup] = useState(false);
+  const [newToolData, setNewToolData] = useState({
+  tool_name: '',
+  tool_type: '',
+  manufacturer: '',
+  purchase_date: '',
+  comments: '',
+});
 
   const fetchTools = async () => {
     try {
-      const { data, error } = await supabase.from('drilling_tools').select('*');
+      const { data, error } = await supabase.from('drilling_tools').select('*')
+      .order('serial_number', { ascending: true }); 
+
       if (error) throw error;
       setTools(data);
     } catch (error) {
@@ -35,7 +45,7 @@ const ToolsList = ({ sidebar }) => {
   }, []);
 
   const deleteTool = async () => {
-    if (selectedTool && selectedTool.serial_number) { // Ensure selectedTool has a valid serial_number
+    if (selectedTool && selectedTool.serial_number) { 
       try {
         await supabase.from('drilling_tools').delete().eq('serial_number', selectedTool.serial_number);
         fetchTools();
@@ -51,7 +61,7 @@ const ToolsList = ({ sidebar }) => {
   };
 
   const editTool = async () => {
-    if (selectedTool && editData.tool_name && editData.tool_type && editData.status) { // Ensure all fields are filled
+    if (selectedTool && editData.tool_name && editData.tool_type && editData.status) { 
       try {
         const { error } = await supabase
           .from('drilling_tools')
@@ -60,9 +70,9 @@ const ToolsList = ({ sidebar }) => {
             tool_type: editData.tool_type,
             status: editData.status
           })
-          .eq('serial_number', selectedTool.serial_number); // Use `serial_number` as the identifier
+          .eq('serial_number', selectedTool.serial_number); 
         if (error) throw error;
-        fetchTools(); // Refresh the tools list
+        fetchTools();
         setShowEditPopup(false);
         setShowConfirmation(true);
         setTimeout(() => setShowConfirmation(false), 1500);
@@ -73,6 +83,46 @@ const ToolsList = ({ sidebar }) => {
       alert('Please fill in all fields.');
     }
   };
+
+
+  const addTool = async () => {
+    const { tool_name, tool_type, manufacturer, purchase_date, comments } = newToolData;
+  
+    if (tool_name && tool_type && manufacturer && purchase_date) {
+      try {
+        const { error } = await supabase.from('drilling_tools').insert([
+          {
+            tool_name,
+            tool_type,
+            manufacturer,
+            purchase_date,
+            comments,
+            status: 'Available', 
+            usage_hours: 0, 
+            tool_condition: 'Good',
+          },
+        ]);
+        if (error) throw error;
+  
+        fetchTools(); 
+        setShowAddPopup(false); 
+        setNewToolData({
+          tool_name: '',
+          tool_type: '',
+          manufacturer: '',
+          purchase_date: '',
+          comments: '',
+        });
+        setShowConfirmation(true); 
+        setTimeout(() => setShowConfirmation(false), 1500);
+      } catch (error) {
+        console.error('Error adding tool:', error);
+      }
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  };
+  
 
   const handleAssignClick = (tool) => {
     setSelectedTool(tool);
@@ -143,7 +193,7 @@ const ToolsList = ({ sidebar }) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="add-button"> + Create New</button>
+          <button className="add-button" onClick={() => setShowAddPopup(true)}>+ Create New</button>
         </div>
 
         <div className="tools-table-container">
@@ -252,6 +302,61 @@ const ToolsList = ({ sidebar }) => {
       <div className="popup-buttons">
         <button onClick={editTool} className="confirm-button">Save</button>
         <button onClick={() => setShowEditPopup(false)} className="cancel-button">Cancel</button>
+      </div>
+    </div>
+  </div>
+)}
+
+{showAddPopup && (
+  <div className="add-popup">
+    <div className="popup-content">
+      <h3 style={{ color: 'black' }}>Add New Tool</h3>
+      <label htmlFor="tool_name">Name</label>
+      <input
+        type="text"
+        id="tool_name"
+        placeholder="Enter tool name"
+        value={newToolData.tool_name}
+        onChange={(e) => setNewToolData({ ...newToolData, tool_name: e.target.value })}
+      />
+
+      <label htmlFor="tool_type">Type</label>
+      <input
+        type="text"
+        id="tool_type"
+        placeholder="Enter tool type"
+        value={newToolData.tool_type}
+        onChange={(e) => setNewToolData({ ...newToolData, tool_type: e.target.value })}
+      />
+
+      <label htmlFor="manufacturer">Manufacturer</label>
+      <input
+        type="text"
+        id="manufacturer"
+        placeholder="Enter manufacturer"
+        value={newToolData.manufacturer}
+        onChange={(e) => setNewToolData({ ...newToolData, manufacturer: e.target.value })}
+      />
+
+      <label htmlFor="purchase_date">Purchase Date</label>
+      <input
+        type="date"
+        id="purchase_date"
+        value={newToolData.purchase_date}
+        onChange={(e) => setNewToolData({ ...newToolData, purchase_date: e.target.value })}
+      />
+
+      <label htmlFor="comments">Comments</label>
+      <textarea
+        id="comments"
+        placeholder="Enter comments (optional)"
+        value={newToolData.comments}
+        onChange={(e) => setNewToolData({ ...newToolData, comments: e.target.value })}
+      />
+
+      <div className="popup-buttons">
+        <button onClick={addTool} className="confirm-button">Add Tool</button>
+        <button onClick={() => setShowAddPopup(false)} className="cancel-button">Cancel</button>
       </div>
     </div>
   </div>

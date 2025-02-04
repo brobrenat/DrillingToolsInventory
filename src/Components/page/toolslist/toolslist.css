@@ -235,18 +235,18 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* Ensure it's above other content */
+  z-index: 9999; 
 }
 
 .delete-popup .popup-content {
   background-color: white;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px; /* Optional: for rounded corners */
+  border-radius: 10px; 
   text-align: center;
   color: black;
 }
@@ -273,45 +273,41 @@
   cursor: pointer;
   margin-left: 10px;
 }
-/* toolslist.css */
 
-/* General styles for the confirmation pop-up */
 .confirmation-popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Ensure it's above other content */
+  z-index: 9999;
 }
 
 .confirmation-popup .popup-content {
   background-color: white;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px; /* Optional: for rounded corners */
+  border-radius: 10px;
   text-align: center;
   color: black;
 }
 
-/* toolslist.css */
 
-/* General styles for the edit pop-up */
 .edit-popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* Ensure it's above other content */
+  z-index: 9999; 
 }
 
 .edit-popup .popup-content {
@@ -358,4 +354,78 @@
   text-align: left;
   display: block;
   margin-top: 10px;
+}
+
+.add-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; 
+}
+
+.add-popup label {
+  text-align: left;
+  display: block;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.add-popup .popup-content {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Rounded corners */
+  text-align: center;
+  width: 400px;
+  max-width: 90%;
+}
+
+.add-popup .popup-content h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #3f3081; /* Matching your theme */
+}
+
+.add-popup .popup-content input[type="text"],
+.add-popup .popup-content textarea,
+.add-popup .popup-content select {
+  width: 90%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.add-popup .popup-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-popup .confirm-button {
+  background-color: #3f3081; /* Your theme color */
+  color: white;
+  margin-right: 10px;
+}
+
+.add-popup .cancel-button {
+  background-color: gray;
+  color: white;
+}
+
+.add-popup .popup-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

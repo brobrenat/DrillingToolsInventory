@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Components/page/login/login';
 import Dashboard from './Components/page/dashboard/dashboard';
-import ToolsList from './Components/page/toolslist/toolslist';  // Capitalized
-import Tracking from './Components/page/tracking/tracking';    // Capitalized
-import History from './Components/page/history/history';       // Capitalized
+import ToolsList from './Components/page/toolslist/toolslist';  
+import Tracking from './Components/page/tracking/tracking';    
+import History from './Components/page/history/history';       
 import Profile from './Components/page/profile/profile';
 
 const App = () => {

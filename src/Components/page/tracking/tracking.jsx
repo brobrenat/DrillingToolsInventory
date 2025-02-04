@@ -8,8 +8,8 @@ const Tracking = ({ sidebar }) => {
   const [tools, setTools] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTools, setSelectedTools] = useState([]);
-  const [currentTime, setCurrentTime] = useState(new Date()); // Add state for current time
-  const [showConfirmation, setShowConfirmation] = useState(false); // Add state for confirmation pop-up
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [showConfirmation, setShowConfirmation] = useState(false); 
   
 
   const fetchTools = async () => {
@@ -30,7 +30,7 @@ const Tracking = ({ sidebar }) => {
     fetchTools();
   }, []);
 
-  // Add real-time update effect
+ 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -80,24 +80,24 @@ const Tracking = ({ sidebar }) => {
     setShowConfirmation(true);
     setTimeout(() => {
       setShowConfirmation(false);
-    }, 1500); // Hide the confirmation after 1.5 seconds
+    }, 1500); 
   };
   
   const calculateDuration = (updatedAt) => {
     try {
-      // Parse the updatedAt timestamp as a Date object in UTC
+    
       const lastUpdated = new Date(updatedAt);
   
-      // Get the current time in UTC
+    
       const now = new Date();
   
-      // Calculate the difference in milliseconds
+   
       const diffMs = now.getTime() - lastUpdated.getTime();
   
-      // Calculate total seconds difference
+  
       const totalSeconds = Math.floor(diffMs / 1000);
   
-      // Calculate hours, minutes, and seconds
+  
       const hours = String(Math.floor(totalSeconds / 3600)-7).padStart(2, '0');
       const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
       const seconds = String(totalSeconds % 60).padStart(2, '0');

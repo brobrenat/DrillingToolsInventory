@@ -1,0 +1,131 @@
+/* General Page Styling */
+.history-page {
+  padding: 20px;
+  align-items: center;
+  align-content: center;
+  margin-left: 380px;
+  transition: margin-left 0.9s ease;
+  width: 800px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.history-content {
+  transition: margin-left 0.5s ease;
+  width: 200%;
+  margin-top: -150px;
+  scale: 1.2;
+  margin-left: 200px;
+  height: 75vh;
+}
+
+.history-content h1 {
+  color: black;
+  margin-top: 150px;
+}
+
+/* Loading and Error Messages */
+.loading-message,
+.error-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.error-message {
+  color: red;
+}
+
+/* Table Styling */
+.history-container {
+  overflow-y: auto;
+  max-height: 800px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.history-table th {
+  background-color: #839aff;
+  color: black;
+  font-weight: bold;
+}
+
+.history-table tr {
+  color: black;
+  font-weight: bold;
+}
+
+.history-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.history-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Action Column Styling */
+.history-table td:first-child {
+  font-weight: bold;
+}
+
+.action-insert {
+  color: green; /* Color for INSERT actions */
+}
+
+.action-update {
+  color: orange; /* Color for UPDATE actions */
+}
+
+.action-delete {
+  color: red; /* Color for DELETE actions */
+}
+
+
+/* Column Widths */
+.history-table th:nth-child(1),
+.history-table td:nth-child(1) {
+  width: 200px; /* Action column width */
+  height: 30px;
+
+}
+
+.history-table th:nth-child(2),
+.history-table td:nth-child(2) {
+  width: 150px; /* Serial Number column width */
+}
+
+.history-table th:nth-child(3),
+.history-table td:nth-child(3) {
+  width: 300px; /* Old Data column width */
+}
+
+.history-table th:nth-child(4),
+.history-table td:nth-child(4) {
+  width: 300px; /* New Data column width */
+}
+
+.history-table th:nth-child(5),
+.history-table td:nth-child(5) {
+  width: 300px; /* Changed Data column width */
+}
+
+
+/* JSON Data Styling */
+.json-data {
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 12px;
+  color: #333;
+}

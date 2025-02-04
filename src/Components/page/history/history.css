@@ -13,11 +13,18 @@
 
 .history-content {
   transition: margin-left 0.5s ease;
-  width: 200%;
-  margin-top: -150px;
-  scale: 1.2;
-  margin-left: 200px;
+  width : 200%;
+  margin-top: -300px;
+  scale: 0.9;
+  margin-left: -100px;
   height: 75vh;
+}
+
+
+
+.sidebar.collapsed ~.history-content {
+    margin-left: -300px;
+    transition: margin-left 0.9s ease;
 }
 
 .history-content h1 {
@@ -57,10 +64,14 @@
 }
 
 .history-table th {
+  position: sticky;
+  top: 0;
   background-color: #839aff;
   color: black;
   font-weight: bold;
 }
+
+
 
 .history-table tr {
   color: black;
@@ -93,7 +104,7 @@
 }
 
 
-/* Column Widths */
+
 .history-table th:nth-child(1),
 .history-table td:nth-child(1) {
   width: 200px; /* Action column width */

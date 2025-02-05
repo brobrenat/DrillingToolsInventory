@@ -1,42 +1,42 @@
-.contentbody h1{
+.contentbody h1 {
     text-align: left;
     color: black;
     margin-bottom: 30px;
-    margin-left: 170px;
+    margin-left: 5%;
     margin-top: 50px;
-
 }
 
 .content-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     margin-top: 50px;
     background: linear-gradient(90deg, #568fe9, #351c3d);
     height: 80vh;
-    width : 150vh;
+    width: 90%; /* Change from fixed 150vh to percentage */
+    max-width: 1200px; /* Prevent too wide on large screens */
     border-radius: 50px;
     animation: gradient 0.1s ease infinite;
-    margin-left: 180px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .box-container {
-    display: flex; 
-    justify-content: flex-start;
-    gap: 150px; 
-    margin-left: 100px;
+    display: flex;
+    justify-content: center;
+    gap: 5%; /* Instead of fixed 150px */
     flex-wrap: wrap;
+    width: 100%;
     margin-top: -50px;
 }
 
 .square {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 200px;
+    width: 22%; /* Instead of fixed 200px */
+    max-width: 220px;
     height: 150px;
     background-color: rgb(125, 153, 247);
     border-radius: 25px;
@@ -44,34 +44,50 @@
     color: white;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
-    margin-bottom: -20px;
+    text-align: center;
 }
 
 .square h2 {
-    color: rgb(248, 248, 248); 
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
 }
 
 .square p {
-    font-size: 50px;
+    font-size: 2rem;
     margin: 0;
 }
-
 
 .chart-container {
     display: flex;
     margin-top: 50px;
-    margin-left: 180px;
-    margin-right: 180px;
+    width: 90%;
+    max-width: 1000px;
+    height: 50vh;
     background-color: rgb(57, 56, 153);
     border-radius: 30px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
-    width: 100vh;
-    height: 50vh;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding: 20px;
-  
+}
+
+/* Responsive Fix for Smaller Screens */
+@media (max-width: 768px) {
+    .square {
+        width: 45%; /* Two squares per row */
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .square {
+        width: 90%; /* One square per row */
+    }
+
+    .content-container, .chart-container {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

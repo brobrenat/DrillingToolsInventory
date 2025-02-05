@@ -1,110 +1,36 @@
+.contentbody {
+    margin-left: 260px; /* Adjust according to sidebar width */
+    padding: 20px;
+}
+
 .contentbody h1 {
     text-align: left;
     color: black;
     margin-bottom: 30px;
-    margin-left: 5%;
     margin-top: 50px;
 }
 
+/* Ensure content fills remaining space */
 .content-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
     background: linear-gradient(90deg, #568fe9, #351c3d);
-    height: auto; /* Allow it to expand dynamically */
-    width: 85%; /* Adjust width to fit sidebar */
+    width: calc(100% - 260px); /* Sidebar width compensation */
     max-width: 1200px;
     border-radius: 50px;
-    animation: gradient 0.1s ease infinite;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
-    padding: 30px; /* Prevents content from being squeezed */
+    padding: 30px;
 }
 
-/* Ensure it does not overlap with sidebar */
-@media (min-width: 1024px) {
-    .content-container {
-        margin-left: 250px; /* Adjust based on sidebar width */
-    }
-}
-
-.box-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* More flexible gap */
-    flex-wrap: wrap;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.square {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 220px;
-    height: 150px;
-    background-color: rgb(125, 153, 247);
-    border-radius: 25px;
-    font-weight: bold;
-    color: white;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    text-align: center;
-}
-
-.square h2 {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
-
-.square p {
-    font-size: 2rem;
-    margin: 0;
-}
-
-.chart-container {
-    display: flex;
-    margin-top: 50px;
-    width: 85%;
-    max-width: 1000px;
-    height: auto; /* Make height dynamic */
-    background-color: rgb(57, 56, 153);
-    border-radius: 30px;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-}
-
-/* Responsive Fix for Smaller Screens */
+/* Responsive Fixes */
 @media (max-width: 1024px) {
+    .contentbody {
+        margin-left: 0; /* Remove margin when sidebar collapses */
+    }
+
     .content-container {
         width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-@media (max-width: 768px) {
-    .box-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .square {
-        width: 90%; /* Full width on smaller screens */
-    }
-
-    .chart-container {
-        width: 95%;
-    }
-}
-
-@media (max-width: 480px) {
-    .square {
-        width: 100%;
     }
 }

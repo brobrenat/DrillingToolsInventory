@@ -31,7 +31,7 @@ input[type="checkbox"] {
 }
 
 .sidebar.collapsed ~.tracking-content {
-  margin-left: -300px;
+  margin-left: -260px;
   transition: margin-left 0.9s ease;
 }
   .tracking-header {

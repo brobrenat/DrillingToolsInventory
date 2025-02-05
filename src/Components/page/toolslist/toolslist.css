@@ -1,72 +1,121 @@
 .tools-list-page {
-    padding: 20px;
-    align-items: center;
-    align-content: center;
-    margin-left: 380px;
-    transition: margin-left 0.9s ease;
-    width : 800px;
-    position: sticky;   
-    top: 0;             
-    z-index: 2; 
-
-  }
-.tools-list-content h1{
-  color: black;
-  margin-top: 150px;
-}
-.tools-list-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-left: 30%;
   transition: margin-left 0.5s ease;
-  width : 200%;
-  margin-top: -300px;
-  scale: 0.9;
-  margin-left: -100px;
-  height: 75vh;
+  width: 100%;
 }
 
-
-.sidebar.collapsed ~.tools-list-content {
-    margin-left: -300px;
-    transition: margin-left 0.9s ease;
+/* Sidebar collapsed adjustment */
+.sidebar.collapsed ~ .tools-list-content {
+  margin-left: -35%;
+  transition: margin-left 0.5s ease;
+  margin-top: -10%;
 }
+
+.tools-list-content {
+  transition: margin-left 0.5s ease;
+  margin-top: -10%;
+}
+/* Responsive Table Container */
+.tools-table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow-x: auto;  /* Enable horizontal scroll if needed */
+  transition: margin-left 0.5s ease;
+}
+
+/* Table Styling */
+.tools-table {
+  width: 100%;
+  max-width: 1200px;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border: 1px solid #ececec;
+}
+
+.tools-table th, .tools-table td {
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Sticky Header Fix */
+.tools-table th {
+  background-color: #839aff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  color: black;
+}
+
+/* Buttons & Search Bar */
+.search-bar {
+  width: 100%;
+  max-width: 100vh;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color: #c4c4c4;
+}
+
+.add-button {
+  background-color: #3f3081;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .tools-list-page {
+      margin-left: 80px;
+      width: calc(100% - 80px);
+  }
+
+  .tools-table-container {
+      overflow-x: auto;
+  }
+
+  .tools-table th, .tools-table td {
+      font-size: 14px;
+      padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tools-list-page {
+      margin-left: 0;
+      width: 100%;
+      padding: 10px;
+  }
+
   .tools-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    background-color: white; 
-    border-radius: 10px;
-    z-index: 1000; 
-    padding: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
   }
-  .tools-table th {
-    background-color: #839aff;
-    position: sticky;   
-    top: 0;             
-    z-index: 2;         
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ececec;
-    color: black;
-  }
-  
+
   .search-bar {
-    padding: 5px;
-    border-radius: 25px;
-    border: 1px solid #000000;
-    background-color: #c4c4c4;
- 
+      width: 100%;
   }
-  
+
   .add-button {
-    background-color: #3f3081;
-    border: 1px solid #ccc;
-    padding: 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    width: 200px;
+      width: 100%;
+  }
+}
+
+  .tools-list-content h1{
+    color: black;
+    margin-top: 150px;
   }
   
   .tools-table {
@@ -91,9 +140,6 @@
     text-align: left;
     border-bottom: 1px solid #ebe0e0;
     color : black;
-
-    
-
   }
 
 .tools-table th:first-child, 

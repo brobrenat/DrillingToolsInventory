@@ -13,21 +13,29 @@
     align-items: center;
     margin-top: 50px;
     background: linear-gradient(90deg, #568fe9, #351c3d);
-    height: 80vh;
-    width: 90%; /* Change from fixed 150vh to percentage */
-    max-width: 1200px; /* Prevent too wide on large screens */
+    height: auto; /* Allow it to expand dynamically */
+    width: 85%; /* Adjust width to fit sidebar */
+    max-width: 1200px;
     border-radius: 50px;
     animation: gradient 0.1s ease infinite;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 30px; /* Prevents content from being squeezed */
+}
+
+/* Ensure it does not overlap with sidebar */
+@media (min-width: 1024px) {
+    .content-container {
+        margin-left: 250px; /* Adjust based on sidebar width */
+    }
 }
 
 .box-container {
     display: flex;
     justify-content: center;
-    gap: 5%; /* Instead of fixed 150px */
+    gap: 20px; /* More flexible gap */
     flex-wrap: wrap;
     width: 100%;
-    margin-top: -50px;
+    margin-top: 20px;
 }
 
 .square {
@@ -35,8 +43,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 22%; /* Instead of fixed 200px */
-    max-width: 220px;
+    width: 220px;
     height: 150px;
     background-color: rgb(125, 153, 247);
     border-radius: 25px;
@@ -60,9 +67,9 @@
 .chart-container {
     display: flex;
     margin-top: 50px;
-    width: 90%;
+    width: 85%;
     max-width: 1000px;
-    height: 50vh;
+    height: auto; /* Make height dynamic */
     background-color: rgb(57, 56, 153);
     border-radius: 30px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
@@ -73,21 +80,31 @@
 }
 
 /* Responsive Fix for Smaller Screens */
+@media (max-width: 1024px) {
+    .content-container {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 @media (max-width: 768px) {
+    .box-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .square {
-        width: 45%; /* Two squares per row */
-        max-width: none;
+        width: 90%; /* Full width on smaller screens */
+    }
+
+    .chart-container {
+        width: 95%;
     }
 }
 
 @media (max-width: 480px) {
     .square {
-        width: 90%; /* One square per row */
-    }
-
-    .content-container, .chart-container {
-        width: 95%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 100%;
     }
 }

@@ -1,34 +1,40 @@
-.contentbody h1{
+.contentbody {
+    margin-left: 260px; /* Adjust according to sidebar width */
+    padding: 20px;
+}
+
+.contentbody h1 {
     text-align: left;
     color: black;
     margin-bottom: 30px;
-    margin-left: 170px;
     margin-top: 50px;
 }
 
+/* Ensure content fills remaining space */
 .content-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    margin-top: 50px;
+    align-items: center;
     background: linear-gradient(90deg, #568fe9, #351c3d);
-    height: 80vh;
-    width : 150vh;
+    width: calc(100% - 260px); /* Sidebar width compensation */
+    max-width: 1200px;
     border-radius: 50px;
-    animation: gradient 0.1s ease infinite;
-    margin-left: 180px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 30px;
 }
 
-.box-container {
-    display: flex; 
-    justify-content: flex-start;
-    gap: 150px; 
-    margin-left: 100px;
-    flex-wrap: wrap;
-    margin-top: -50px;
+/* Responsive Fixes */
+@media (max-width: 1024px) {
+    .contentbody {
+        margin-left: 0; /* Remove margin when sidebar collapses */
+    }
+
+    .content-container {
+        width: 90%;
+    }
 }
+<<<<<<< HEAD
 
 .square {
     display: flex;
@@ -72,3 +78,5 @@
     flex-direction: column;
     padding: 20px;
 }
+=======
+>>>>>>> 9002c466bf95613634b87289d2bd7bfbadfcb244

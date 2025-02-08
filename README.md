@@ -2,6 +2,8 @@
 # DrillingToolsInventory
 a web based CRUD for managing drilling tools
 =======
+# Deployed on Netlify
+- https://drillinginventory.netlify.app/
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

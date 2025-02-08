@@ -56,7 +56,6 @@
 /* Buttons & Search Bar */
 .search-bar {
   width: 100%;
-  max-width: 100vh;
   padding: 10px;
   border-radius: 25px;
   border: 1px solid #000;
@@ -78,7 +77,11 @@
 @media (max-width: 1024px) {
   .tools-list-page {
       margin-left: 80px;
-      width: calc(100% - 80px);
+      width: calc(100% - 200px);
+      display: flex;
+
+      align-content: flex-start;
+     
   }
 
   .tools-table-container {

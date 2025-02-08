@@ -1,18 +1,24 @@
 .dashboard-container {
     display: flex;
     flex-direction: row;
-    height: 100vh;
     align-content: flex-start;
-    margin-left: 20vh;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr); 
+    
   }
   
 
   .dashboard-content {
     transition: margin-left 0.5s ease;
-
+    width: 90%;
+    display: flex;
+    flex-direction: row;
   }
 
   .sidebar.collapsed ~ .dashboard-content {
     margin-left: -230px;
     transition: margin-left 0.9s ease;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
   }

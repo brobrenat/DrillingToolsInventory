@@ -79,8 +79,6 @@
       margin-left: 80px;
       width: calc(100% - 200px);
       display: flex;
-
-      align-content: flex-start;
      
   }
 

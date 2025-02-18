@@ -58,8 +58,7 @@ const content = () => {
 
       return (
           <div className="contentbody">
-
-        
+            <h1>Dashboard</h1>
         <div className="content-container">
           <div className="box-container">
             <div className="box1">

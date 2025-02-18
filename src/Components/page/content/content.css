@@ -17,7 +17,7 @@
     flex-direction: column;
     align-items: center;
     background: linear-gradient(90deg, #568fe9, #351c3d);
-    width: 150%;
+    width: 100%;
     border-radius: 50px;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
     padding: 30px;
@@ -81,7 +81,7 @@
 @media (max-width: 1400px) {
     .content-container {
         grid-template-columns: repeat(4, 1fr); /* 2 kolom di layar kecil */
-
+        background-color: #ffffff;
         width: 100%;
 
     }
@@ -91,6 +91,7 @@
     .content-container {
         grid-template-columns: repeat(3, 1fr); /* 2 kolom di layar kecil */
         width: 100%;
+        background-color: #ffffff;
     }
 }
 
@@ -98,13 +99,14 @@
     .content-container {
         grid-template-columns: repeat(2, 1fr); /* 2 kolom di layar kecil */
         width: 100%;
+        background-color: #ffffff;
     }
 }
 
 @media (max-width: 480px) {
     .content-container {
         grid-template-columns: repeat(1, 1fr); /* 1 kolom di layar HP */
-
+        background-color: #ffffff;
         width: 100%;
     }
 }

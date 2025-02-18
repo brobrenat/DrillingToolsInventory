@@ -5,6 +5,7 @@ import Content from '../content/content';
 const dashboard = ({ sidebar }) => {
   return (
     <div className="dashboard-container">
+      <h1>Dashboard</h1>
       {sidebar && <Sidebar />}
       <div className="dashboard-content">
         <Content/>

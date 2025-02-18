@@ -6,6 +6,14 @@
     grid-template-columns: repeat(4, 1fr); 
     
   }
+
+  .dashboard-container h1 {
+    text-align: left;
+    color: black;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    margin-left: 100px;
+}
   
 
   .dashboard-content {

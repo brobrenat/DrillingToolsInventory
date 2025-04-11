@@ -6,6 +6,7 @@ import ToolsList from './Components/page/toolslist/toolslist';
 import Tracking from './Components/page/tracking/tracking';    
 import History from './Components/page/history/history';       
 import Profile from './Components/page/profile/profile';
+import ToolsUsedChart from './Components/page/content/ToolsUsedChart';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,7 +66,6 @@ const App = () => {
             </PrivateRoute>
           }
         />
-
 
       </Routes>
     </Router>

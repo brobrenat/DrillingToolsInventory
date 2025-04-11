@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation
+import { Link, useLocation, useNavigate } from 'react-router-dom'; // Import useLocation and useNavigate
 import './Sidebar.css'; // Ensure to include your CSS styles
 
 const Sidebar = ({ sidebar }) => {
@@ -7,6 +7,7 @@ const Sidebar = ({ sidebar }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -16,7 +17,13 @@ const Sidebar = ({ sidebar }) => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
 
-  const isActive = (path) => location.pathname === path; 
+  const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('username');
+    navigate('/');
+  };
 
   return (
     <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
@@ -60,21 +67,13 @@ const Sidebar = ({ sidebar }) => {
             <span>Profile</span>
           </Link>
         </li>
-        <li className={`dropdown ${activeDropdown === 0 ? 'active' : ''}`}>
-          <a href="#" className="nav-item dropdown-toggle" onClick={() => toggleDropdown(0)}>
-            <div>
-              <span className="nav-icon"><i className="fas fa-cogs"></i></span>
-              <span>Settings</span>
-            </div>
-            <i className={`fas ${activeDropdown === 0 ? 'fa-chevron-down' : 'fa-chevron-right'} dropdown-icon`}></i>
-          </a>
-          <ul className="dropdown-menu">
-            <li><Link to="/settings/general" className="dropdown-item">General</Link></li>
-            <li><Link to="/settings/privacy" className="dropdown-item">Privacy</Link></li>
-            <li><Link to="/settings/notifications" className="dropdown-item">Notifications</Link></li>
-          </ul>
-        </li>
       </ul>
+      <div className="sidebar-footer">
+        <button className="logout-btn" onClick={handleLogout}>
+          <span className="nav-icon"><i className="fas fa-sign-out-alt"></i></span>
+          <span>Logout</span>
+        </button>
+      </div>
     </div>
   );
 };

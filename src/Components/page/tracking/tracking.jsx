@@ -1,194 +1,205 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../../createClient';
 import './tracking.css';
 import Sidebar from '../../sidebar/Sidebar';
 
 const Tracking = ({ sidebar }) => {
-  const [tools, setTools] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTools, setSelectedTools] = useState([]);
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [showConfirmation, setShowConfirmation] = useState(false); 
-  
+    const [tools, setTools] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [selectedTool, setSelectedTool] = useState(null);
+    const [updateMessage, setUpdateMessage] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [durations, setDurations] = useState({});
+    const [userRole, setUserRole] = useState('');
 
-  const fetchTools = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('drilling_tools')
-        .select('*')
-        .eq('status', 'In Use');
-      if (error) throw error;
-      setTools(data);
-      console.log("Tools fetched: ", data);
-    } catch (error) {
-      console.error('Error fetching tools:', error);
-    }
-  };
+    useEffect(() => {
+        fetchTools();
+        const role = localStorage.getItem('userRole');
+        setUserRole(role);
+    }, []);
 
-  useEffect(() => {
-    fetchTools();
-  }, []);
+    const isSupervisor = () => userRole === 'Supervisor';
 
- 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    const fetchTools = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('drilling_tools')
+                .select('*')
+                .eq('status', 'In Use')
+                .order('updated_at', { ascending: false });
 
-    return () => clearInterval(timer);
-  }, []);
+            if (error) throw error;
+            setTools(data);
+            setLoading(false);
+        } catch (err) {
+            setError('Failed to fetch tools data');
+            setLoading(false);
+        }
+    };
 
-  const handleCheckbox = (serialNumber) => {
-    setSelectedTools(prev => {
-      if (prev.includes(serialNumber)) {
-        return prev.filter(sn => sn !== serialNumber);
-      } else {
-        return [...prev, serialNumber];
-      }
-    });
-  };
+    const handleToolSelect = (tool) => {
+        setSelectedTool(tool);
+    };
 
-  const handleTerminate = async () => {
-    try {
-      if (selectedTools.length === 0) {
-        alert('Please select tools to terminate');
-        return;
-      }
-  
-      const now = new Date();
-  
-      const { error } = await supabase
-        .from('drilling_tools')
-        .update({ 
-          status: 'Available',
-          updated_at: now.toISOString()
-        })
-        .in('serial_number', selectedTools);
-  
-      if (error) throw error;
-      await fetchTools();
-      setSelectedTools([]);
-      showConfirmationPopup();
-    } catch (error) {
-      console.error('Error updating tools:', error);
-      alert('Error updating tools: ' + error.message);
-    }
-  };
+    const formatDuration = (startTime) => {
+        const now = new Date();
+        const start = new Date(startTime);
+        const diff = Math.floor((now - start) / 1000); // difference in seconds
 
-  const showConfirmationPopup = () => {
-    setShowConfirmation(true);
-    setTimeout(() => {
-      setShowConfirmation(false);
-    }, 1500); 
-  };
-  
-  const calculateDuration = (updatedAt) => {
-    try {
-    
-      const lastUpdated = new Date(updatedAt);
-  
-    
-      const now = new Date();
-  
-   
-      const diffMs = now.getTime() - lastUpdated.getTime();
-  
-  
-      const totalSeconds = Math.floor(diffMs / 1000);
-  
-  
-      const hours = String(Math.floor(totalSeconds / 3600)-7).padStart(2, '0');
-      const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
-      const seconds = String(totalSeconds % 60).padStart(2, '0');
-  
-      return `${hours}:${minutes}:${seconds}`;
-    } catch (error) {
-      console.error('Error calculating duration:', error);
-      return '00:00:00';
-    }
-  };
+        const hours = Math.floor(diff / 3600);
+        const minutes = Math.floor((diff % 3600) / 60);
+        const seconds = diff % 60;
 
-  const filteredTools = tools.filter((tool) =>
-    tool.serial_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tool.tool_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tool.tool_type.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    };
 
-  return (
-    <div className="tracking-page">
-      {sidebar && <Sidebar />}
-      <div className="tracking-content">
-        <h1>Tracking</h1>
-        <div className="tracking-header">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="search-bar"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button className="terminate-button" onClick={handleTerminate}>
-            Terminate
-          </button>
-        </div>
-      
-        <div className="tracking-container">
-          <table className="tracking-table">
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Serial Number</th>
-                <th>Status</th>
-                <th>Name</th>
-                <th>Duration</th>
-                <th>Assigned to</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTools.length > 0 ? (
-                filteredTools.map((tool, index) => (
-                  <tr key={tool.serial_number}>
-                    <td>
-                      <input 
-                        type="checkbox"
-                        checked={selectedTools.includes(tool.serial_number)}
-                        onChange={() => handleCheckbox(tool.serial_number)}
-                      />
-                      {index + 1}
-                    </td>
-                    <td>{tool.serial_number}</td>
-                    <td>
-                      {tool.status === 'Available' ? (
-                        <span className="status available">● Available</span>
-                      ) : (
-                        <span className="status in-use">● In use</span>
-                      )}
-                    </td>
-                    <td>{tool.tool_name}</td>
-                    <td>{calculateDuration(tool.updated_at)}</td>
-                    <td>{tool.location}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6">No tools found</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        {showConfirmation && (
-          <div className="popup">
-            <div className="popup-content">
-              <h3 style={{ color: 'green' }}>Operation Successful!</h3>
-              <p>The operation has been completed successfully.</p>
+    useEffect(() => {
+        const timer = setInterval(() => {
+            const newDurations = {};
+            tools.forEach(tool => {
+                newDurations[tool.serial_number] = formatDuration(tool.updated_at);
+            });
+            setDurations(newDurations);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [tools]);
+
+    const terminateJob = async (tool) => {
+        try {
+            setLoading(true);
+            
+            const startTime = new Date(tool.updated_at);
+            const endTime = new Date();
+            const hoursUsed = (endTime - startTime) / (1000 * 60 * 60);
+
+            const updates = {
+                status: 'Available',
+                location: 'Main Storage',
+                updated_at: endTime.toISOString(),
+                job_end_time: endTime.toISOString(),
+                usage_hours: tool.usage_hours + hoursUsed
+            };
+
+            const { error } = await supabase
+                .from('drilling_tools')
+                .update(updates)
+                .eq('serial_number', tool.serial_number);
+
+            if (error) throw error;
+
+            setTools(tools.filter(t => t.serial_number !== tool.serial_number));
+            setUpdateMessage(`Job terminated for ${tool.tool_name}`);
+            setTimeout(() => setUpdateMessage(''), 3000);
+
+            if (selectedTool?.serial_number === tool.serial_number) {
+                setSelectedTool(null);
+            }
+        } catch (err) {
+            setError('Failed to terminate job');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const filteredTools = searchQuery
+        ? tools.filter(tool => 
+            tool.tool_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            tool.location.toLowerCase().includes(searchQuery.toLowerCase()))
+        : tools;
+
+    if (loading) {
+        return (
+            <div className="tracking-page">
+                {sidebar && <Sidebar />}
+                <div className="tracking-content">
+                    <div className="loading-container">Loading tracking data...</div>
+                </div>
             </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+        );
+    }
+
+    return (
+        <div className="tracking-page">
+            {sidebar && <Sidebar />}
+            <div className="tracking-content">
+                <div className="tracking-header">
+                    <h1>Active Jobs Tracking</h1>
+                    <input
+                        type="text"
+                        className="search-bar"
+                        placeholder="Search tools or locations..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                </div>
+
+                {error ? (
+                    <div className="error-message">{error}</div>
+                ) : (
+                    <>
+                        {updateMessage && (
+                            <div className="success-message">{updateMessage}</div>
+                        )}
+                        
+                        <div className="tracking-container">
+                            <table className="tracking-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tool Name</th>
+                                        <th>Location</th>
+                                        <th>Start Time</th>
+                                        <th>Duration</th>
+                                        {!isSupervisor() && <th>Action</th>}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredTools.length > 0 ? (
+                                        filteredTools.map(tool => (
+                                            <tr 
+                                                key={tool.serial_number}
+                                                className={selectedTool?.serial_number === tool.serial_number ? 'selected' : ''}
+                                                onClick={() => handleToolSelect(tool)}
+                                            >
+                                                <td>{tool.tool_name}</td>
+                                                <td>{tool.location}</td>
+                                                <td>{new Date(tool.updated_at).toLocaleString()}</td>
+                                                <td>{durations[tool.serial_number] || '00:00:00'}</td>
+                                                {!isSupervisor() && (
+                                                    <td>
+                                                        <button
+                                                            className="terminate-button"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                terminateJob(tool);
+                                                            }}
+                                                        >
+                                                            Terminate Job
+                                                        </button>
+                                                    </td>
+                                                )}
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={isSupervisor() ? 4 : 5}>
+                                                <div className="no-tools-message">
+                                                    {searchQuery 
+                                                        ? "No active jobs match your search"
+                                                        : "No active jobs at the moment"}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default Tracking;

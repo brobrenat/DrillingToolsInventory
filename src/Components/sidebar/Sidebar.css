@@ -214,3 +214,38 @@ body {
     transform: scaleY(1);
     transform-origin: top;
   }
+
+  .sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .logout-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+  }
+
+  .logout-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ef4444;
+  }
+
+  .sidebar.collapsed .logout-btn span:not(.nav-icon) {
+    display: none;
+  }
+
+  .sidebar.collapsed .sidebar-footer {
+    padding: 1rem 0.75rem;
+  }

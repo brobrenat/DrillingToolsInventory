@@ -1,0 +1,302 @@
+.profile-page {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background: #f8fafc;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.profile-content {
+    flex: 1;
+    margin-left: 300px;
+    background: white;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease;
+    position: relative;
+    width: calc(100% - 300px);
+    min-width: 0;
+    padding: 2rem;
+}
+
+.profile-content h1 {
+    color: black;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: #333;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: black;
+    background-color: white;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #568fe9;
+    box-shadow: 0 0 0 2px rgba(86, 143, 233, 0.1);
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 12px;
+    padding-right: 2rem;
+}
+
+.save-button {
+    background: #568fe9;
+    color: white;
+    border: none;
+    padding: 0.875rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.save-button:hover {
+    background: #4a7fd9;
+}
+
+.save-button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.error-message,
+.success-message {
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+.error-message {
+    background: #fff5f5;
+    color: #c53030;
+    border: 1px solid #feb2b2;
+}
+
+.success-message {
+    background: #f0fff4;
+    color: #2f855a;
+    border: 1px solid #9ae6b4;
+}
+
+.loading-message {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Ensure content stays within viewport */
+.sidebar.collapsed ~ .profile-content {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .profile-content {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+        padding: 1.5rem;
+    }
+
+    .profile-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .password-change-section {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-content {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+        padding: 1rem;
+    }
+    
+    .profile-container {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .profile-container {
+        padding: 1rem;
+    }
+    
+    .profile-content h1 {
+        font-size: 2rem;
+    }
+}
+
+.users-table-container {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.users-table-container h2 {
+    color: #2d3436;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f2f6;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+}
+
+.users-table th {
+    background: #839aff;
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 500;
+    border-radius: 4px 4px 0 0;
+}
+
+.users-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #edf2f7;
+    color: #4a5568;
+}
+
+.users-table tr:last-child td {
+    border-bottom: none;
+}
+
+.users-table tr:hover td {
+    background: #f8fafc;
+}
+
+.password-change-section {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+    
+}
+
+.password-change-section h2 {
+    color: #2d3436;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f2f6;
+}
+
+.password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.password-form .form-group {
+    margin: 0;
+}
+
+.password-form .form-group label {
+    color: #4a5568;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.password-form .form-group input {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.password-form .form-group input:focus {
+    border-color: #839aff;
+    box-shadow: 0 0 0 3px rgba(131, 154, 255, 0.1);
+    outline: none;
+}
+
+.password-form button {
+    background: #3f3081;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+}
+
+.password-form button:hover {
+    background: #2d2460;
+}
+
+.password-form button:disabled {
+    background: #a8a8a8;
+    cursor: not-allowed;
+}

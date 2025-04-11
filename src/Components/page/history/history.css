@@ -1,141 +1,268 @@
 /* General Page Styling */
 .history-page {
-  padding: 20px;
-  align-items: center;
-  align-content: center;
-  margin-left: 350px;
-  transition: margin-left 0.9s ease;
-  width : 80%;
-  position: sticky;   
-  top: 0;             
-  z-index: 2; 
-  margin-top: -200px;
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: white;
 }
 
 .history-content {
-  transition: margin-left 0.5s ease;
-  width : 100%;
-  scale: 0.9;
-  height: 75vh;
-}
-
-
-
-.sidebar.collapsed ~.history-content {
-    margin-left: -300px;
-    transition: margin-left 0.9s ease;
+  flex: 1;
+  margin-left: 300px;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  background-color: white;
+  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .history-content h1 {
   color: black;
-  margin-top: 150px;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
 }
 
 /* Loading and Error Messages */
-.loading-message,
-.error-message {
+.loading-message {
   text-align: center;
-  padding: 20px;
-  font-size: 16px;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
 }
 
 .error-message {
-  color: red;
+  text-align: center;
+  padding: 2rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
 }
 
 /* Table Styling */
 .history-container {
-  overflow-y: auto;
-  max-height: 800px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 0;
+  height: calc(100vh - 200px);
+  position: relative;
 }
 
 .history-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.history-table th,
-.history-table td {
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
+.history-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .history-table th {
+  background-color: #839aff;
+  padding: 1rem;
+  text-align: left;
+  color: black;
+  font-weight: 600;
   position: sticky;
   top: 0;
-  background-color: #839aff;
+}
+
+.history-table tbody {
+  display: block;
+  overflow-y: auto;
+  height: calc(100vh - 250px);
+}
+
+.history-table thead tr,
+.history-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.history-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ececec;
   color: black;
-  font-weight: bold;
+  vertical-align: top;
 }
 
-
-
-.history-table tr {
-  color: black;
-  font-weight: bold;
-}
-
-.history-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.history-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* Action Column Styling */
-.history-table td:first-child {
-  font-weight: bold;
-}
-
-.action-insert {
-  color: green; /* Color for INSERT actions */
-}
-
-.action-update {
-  color: orange; /* Color for UPDATE actions */
-}
-
-.action-delete {
-  color: red; /* Color for DELETE actions */
-}
-
-
-
+/* Column widths */
 .history-table th:nth-child(1),
 .history-table td:nth-child(1) {
-  width: 200px; /* Action column width */
-  height: 30px;
-
+  width: 100px;
 }
 
 .history-table th:nth-child(2),
 .history-table td:nth-child(2) {
-  width: 150px; /* Serial Number column width */
+  width: 150px;
 }
 
 .history-table th:nth-child(3),
-.history-table td:nth-child(3) {
-  width: 300px; /* Old Data column width */
-}
-
+.history-table td:nth-child(3),
 .history-table th:nth-child(4),
 .history-table td:nth-child(4) {
-  width: 300px; /* New Data column width */
+  width: calc((100% - 550px) / 2);
 }
 
 .history-table th:nth-child(5),
 .history-table td:nth-child(5) {
-  width: 300px; /* Changed Data column width */
+  width: 200px;
 }
-
 
 /* JSON Data Styling */
 .json-data {
   white-space: pre-wrap;
   font-family: monospace;
-  font-size: 12px;
+  font-size: 0.875rem;
   color: #333;
+  background: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.sidebar.collapsed ~ .history-content {
+  margin-left: 80px;
+}
+
+@media (max-width: 1024px) {
+  .history-content {
+    margin-left: 250px;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .history-content {
+    margin-left: 80px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-content {
+    margin-left: 0;
+    padding: 0.5rem;
+  }
+  
+  .history-table {
+    font-size: 14px;
+  }
+}
+
+/* Action Colors */
+.action-insert {
+  font-weight: 600;
+  color: #22c55e;
+}
+
+.action-update {
+  font-weight: 600;
+  color: #f59e0b;
+}
+
+.action-delete {
+  font-weight: 600;
+  color: #ef4444;
+}
+
+/* Changes List Styling */
+.changes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.changes-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.changes-list .changed-field {
+  color: #1a1a1a;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.changes-list .old-value {
+  color: #ef4444;
+  text-decoration: line-through;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.changes-list .new-value {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.removed-value {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.arrow {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* Update search bar color */
+.search-bar {
+  color: black !important;
+}
+
+/* Field Name Styling */
+.field-name {
+  font-weight: 500;
+  color: #568fe9;
+  min-width: 100px;
+  margin-right: 0.5rem;
+}
+
+/* Changes Cell Styling */
+.changes-cell {
+  max-width: 400px;
+}
+
+/* History Changes Styling */
+.history-changes {
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.action-label {
+  display: block;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }

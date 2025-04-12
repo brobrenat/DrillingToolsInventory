@@ -12,6 +12,8 @@ const Tracking = ({ sidebar }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [durations, setDurations] = useState({});
     const [userRole, setUserRole] = useState('');
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [toolToTerminate, setToolToTerminate] = useState(null);
 
     useEffect(() => {
         fetchTools();
@@ -44,6 +46,7 @@ const Tracking = ({ sidebar }) => {
 
     const formatDuration = (startTime) => {
         const now = new Date();
+        now.setHours(now.getHours() - 7); // subtract 7 hours
         const start = new Date(startTime);
         const diff = Math.floor((now - start) / 1000); // difference in seconds
 
@@ -70,24 +73,37 @@ const Tracking = ({ sidebar }) => {
         try {
             setLoading(true);
             
+            if (!tool || !tool.serial_number) {
+                throw new Error('Invalid tool data');
+            }
+
             const startTime = new Date(tool.updated_at);
             const endTime = new Date();
-            const hoursUsed = (endTime - startTime) / (1000 * 60 * 60);
+            const hoursUsed = Math.round((endTime - startTime) / (1000 * 60 * 60));
 
             const updates = {
                 status: 'Available',
-                location: 'Main Storage',
                 updated_at: endTime.toISOString(),
-                job_end_time: endTime.toISOString(),
-                usage_hours: tool.usage_hours + hoursUsed
+                usage_hours: tool.usage_hours ? (parseInt(tool.usage_hours) + hoursUsed) : hoursUsed
             };
 
-            const { error } = await supabase
+            console.log('Attempting to update tool:', tool.serial_number);
+            console.log('Updates:', updates);
+
+            const { data, error } = await supabase
                 .from('drilling_tools')
                 .update(updates)
-                .eq('serial_number', tool.serial_number);
+                .eq('serial_number', tool.serial_number)
+                .select();
 
-            if (error) throw error;
+            if (error) {
+                console.error('Supabase error:', error);
+                throw new Error(error.message);
+            }
+
+            if (!data || data.length === 0) {
+                throw new Error('No rows were updated');
+            }
 
             setTools(tools.filter(t => t.serial_number !== tool.serial_number));
             setUpdateMessage(`Job terminated for ${tool.tool_name}`);
@@ -97,10 +113,25 @@ const Tracking = ({ sidebar }) => {
                 setSelectedTool(null);
             }
         } catch (err) {
-            setError('Failed to terminate job');
+            console.error('Error in terminateJob:', err);
+            setError(`Failed to terminate job: ${err.message}`);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleTerminateClick = (e, tool) => {
+        e.stopPropagation();
+        setToolToTerminate(tool);
+        setShowConfirmModal(true);
+    };
+
+    const handleConfirmTerminate = () => {
+        if (toolToTerminate) {
+            terminateJob(toolToTerminate);
+        }
+        setShowConfirmModal(false);
+        setToolToTerminate(null);
     };
 
     const filteredTools = searchQuery
@@ -170,10 +201,7 @@ const Tracking = ({ sidebar }) => {
                                                     <td>
                                                         <button
                                                             className="terminate-button"
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                terminateJob(tool);
-                                                            }}
+                                                            onClick={(e) => handleTerminateClick(e, tool)}
                                                         >
                                                             Terminate Job
                                                         </button>
@@ -198,6 +226,23 @@ const Tracking = ({ sidebar }) => {
                     </>
                 )}
             </div>
+            {showConfirmModal && (
+                <>
+                    <div className="popup-background" onClick={() => setShowConfirmModal(false)} />
+                    <div className="popup">
+                        <div className="popup-title">Confirm Termination</div>
+                        <p>Are you sure you want to terminate the job for {toolToTerminate?.tool_name}?</p>
+                        <div className="popup-buttons">
+                            <button className="cancel-button" onClick={() => setShowConfirmModal(false)}>
+                                Cancel
+                            </button>
+                            <button className="confirm-button" onClick={handleConfirmTerminate}>
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
